@@ -2,16 +2,17 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	myfirego "github.com/khaiql/firego"
 	"github.com/zabawaba99/firego"
 )
 
 const (
-	url        = "https://testnew-6158c.firebaseio.com"
-	secret     = "HYVSVgpUgFJLQutCrXfrCJ2oaR2itXd6zYXbd8LL"
+	url        = "https://benchmark-7f1d0.firebaseio.com"
+	secret     = "3Bvs506qQgA0qyHg04r3xyTvcwrGpouR0ufeLiVR"
 	maxKey     = 30
-	maxRequest = 100
+	maxRequest = 1000
 )
 
 func main() {
@@ -26,10 +27,11 @@ func main() {
 				myFirego := myfirego.New(_url, nil)
 				myFirego.Auth(secret)
 				myFirego.SetParams("print", "silence")
+				myfirego.TimeoutDuration = 1 * time.Minute
 				fmt.Printf("My Firego: %s\n", index)
 				message := produceMessage("my_firego", index)
 				if err := myFirego.Set(message); err != nil {
-					fmt.Printf("My Firego - Error: %s. URL: %s\n", err.Error(), myFirego.String())
+					fmt.Printf("MyFirego - Error: %s. URL: %s\n", err.Error(), myFirego.String())
 				}
 			}()
 		}
