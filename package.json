@@ -1,0 +1,22 @@
+{
+  "name": "benchmark_firebase_lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khaiql/benchmark_firebase_lib.git"
+  },
+  "author": "Scott Le <khai.le@live.com> (http://lequangkhai.wordpress.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khaiql/benchmark_firebase_lib/issues"
+  },
+  "homepage": "https://github.com/khaiql/benchmark_firebase_lib#readme",
+  "dependencies": {
+    "firebase-admin": "^4.0.4"
+  }
+}
