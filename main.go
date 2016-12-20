@@ -1,7 +1,10 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
+	"net"
+	"net/http"
 	"time"
 
 	myfirego "github.com/khaiql/firego"
@@ -41,7 +44,20 @@ func main() {
 		for i := 0; i < maxRequest; i++ {
 			index := fmt.Sprintf("%d", i)
 			go func() {
-				firego := firego.New(fmt.Sprintf("%s/firego/%s", url, index), nil)
+				firebaseTimeout := 3 * time.Minute
+				httpClient := &http.Client{
+					Transport: &http.Transport{
+						DisableKeepAlives: true,
+						Dial: func(network, address string) (net.Conn, error) {
+							c, err := net.DialTimeout(network, address, firebaseTimeout)
+							return c, err
+						},
+						TLSClientConfig: &tls.Config{
+							InsecureSkipVerify: true,
+						},
+					},
+				}
+				firego := firego.New(fmt.Sprintf("%s/firego/%s", url, index), httpClient)
 				firego.Auth(secret)
 				fmt.Printf("Firego: %s\n", index)
 				message := produceMessage("firego", index)
